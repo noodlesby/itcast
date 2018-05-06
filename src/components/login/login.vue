@@ -1,14 +1,17 @@
 <template>
   <div>
-    <form action="#" >
-      <label for="username">用户名</label>
-      <input type="text" v-model="formData.username" id="username"> <br>
-
-      <label for="pwd">密码</label>
-      <input type="text" v-model="formData.password" id="pwd"> <br>
-
-      <input type="button" value="登 录" @click="login">
-    </form>
+    <el-form label-position="left" ref="form" :model="formData" label-width="80px">
+      <el-form-item label="用户名">
+        <el-input v-model="formData.username"></el-input>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input type="password" v-model="formData.password"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="login">登录</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
