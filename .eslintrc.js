@@ -25,6 +25,10 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    // 不检查console
+    'no-console': 'off',
+    // 不检查结果的,
+    "comma-dangle": [2, "never"],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       js: 'never',
