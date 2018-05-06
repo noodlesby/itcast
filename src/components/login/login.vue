@@ -32,6 +32,8 @@ export default {
       const res = await axios.post('http://47.96.21.88:8888/api/private/v1/login', this.formData);
       const data = res.data;
       if (data.meta.status === 200) {
+        // 登录成功，把token记录到本地存储中
+        localStorage.setItem('token', data.token);
         this.$router.push({
           name: 'home'
         });

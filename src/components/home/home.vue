@@ -22,7 +22,20 @@
 
 <script>
 export default {
+  beforeCreate() {
+    // 获取本地存储中的token
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.$router.push({
+        name: 'login'
+      });
+    }
+  },
+  data() {
+    return {
 
+    };
+  }
 };
 </script>
 
