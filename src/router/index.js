@@ -6,7 +6,7 @@ import Home from '@/components/home/home';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       name: 'login',
@@ -20,3 +20,10 @@ export default new Router({
     }
   ]
 });
+
+// 配置路由的拦截器
+router.beforeEach((to, from, next) => {
+  next();
+});
+
+export default router;

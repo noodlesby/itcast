@@ -33,7 +33,7 @@ export default {
       const data = res.data;
       if (data.meta.status === 200) {
         // 登录成功，把token记录到本地存储中
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.data.token);
         this.$router.push({
           name: 'home'
         });
