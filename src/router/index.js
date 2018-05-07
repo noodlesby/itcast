@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { Message } from 'element-ui';
+
 import Login from '@/components/login/login';
 import Home from '@/components/home/home';
 
@@ -31,6 +33,10 @@ router.beforeEach((to, from, next) => {
     // 1. 获取本地存储中的token
     const token = localStorage.getItem('token');
     if (!token) {
+      Message({
+        type: 'warning',
+        message: '请先登录!'
+      });
       // 2. 如果没有token，跳转到登录
       next({
         name: 'login'
