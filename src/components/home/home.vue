@@ -15,13 +15,15 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu :unique-opened="true" default-active="1-4-1" class="el-menu-vertical-demo">
+        <el-menu default-active="1-1"
+          :unique-opened="true"
+          :router="true">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span slot="title">用户管理</span>
             </template>
-            <el-menu-item index="1-1">
+            <el-menu-item index="userlist">
               <i class="el-icon-menu"></i>
               <span>用户列表</span>
             </el-menu-item>
@@ -31,13 +33,13 @@
               <i class="el-icon-location"></i>
               <span slot="title">权限管理</span>
             </template>
-            <el-menu-item index="2-1">
+            <el-menu-item index="rolelist">
               <i class="el-icon-menu"></i>
               <span>角色列表</span>
             </el-menu-item>
             <el-menu-item index="2-2">
               <i class="el-icon-menu"></i>
-              <span>角色列表</span>
+              <span>权限列表</span>
             </el-menu-item>
           </el-submenu>
           <el-submenu index="3">
@@ -80,7 +82,9 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>

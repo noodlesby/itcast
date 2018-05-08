@@ -4,7 +4,8 @@ import { Message } from 'element-ui';
 
 import Login from '@/components/login/login';
 import Home from '@/components/home/home';
-
+import UserList from '@/components/userlist/user-list';
+import RoleList from '@/components/rolelist/role-list';
 
 Vue.use(Router);
 
@@ -18,7 +19,19 @@ const router = new Router({
     {
       name: 'home',
       path: '/',
-      component: Home
+      component: Home,
+      children: [
+        {
+          name: 'userlist',
+          path: '/userlist',
+          component: UserList
+        },
+        {
+          name: 'rolelist',
+          path: '/rolelist',
+          component: RoleList
+        }
+      ]
     }
   ]
 });
