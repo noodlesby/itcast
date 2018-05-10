@@ -25,8 +25,10 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    // 不检查给参数赋值
+    "no-param-reassign": 'off',
     // 不检查console
-    'no-console': 'off',
+    "no-console": 'off',
     // 不检查结果的,
     "comma-dangle": [2, "never"],
     // don't require .vue extension when importing
@@ -36,14 +38,14 @@ module.exports = {
     }],
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'state', // for vuex state
-        'acc', // for reduce accumulators
-        'e' // for e.returnvalue
-      ]
-    }],
+    // 'no-param-reassign': ['error', {
+    //   props: true,
+    //   ignorePropertyModificationsFor: [
+    //     'state', // for vuex state
+    //     'acc', // for reduce accumulators
+    //     'e' // for e.returnvalue
+    //   ]
+    // }],
     // allow optionalDependencies
     'import/no-extraneous-dependencies': ['error', {
       optionalDependencies: ['test/unit/index.js']

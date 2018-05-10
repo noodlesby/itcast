@@ -50,8 +50,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -66,7 +64,7 @@ export default {
       // 从本地存储中获取令牌
       const token = localStorage.getItem('token');
       const param = { pagenum: 1, pagesize: 10 };
-      const data = await axios.get('http://127.0.0.1:8888/api/private/v1/users', {
+      const data = await this.$http.get('/users', {
         headers: {
           Authorization: token
         },
