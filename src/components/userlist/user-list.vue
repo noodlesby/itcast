@@ -62,15 +62,8 @@ export default {
   methods: {
     async load() {
       // 从本地存储中获取令牌
-      const token = localStorage.getItem('token');
       const param = { pagenum: 1, pagesize: 10 };
-      const data = await this.$http.get('/users', {
-        headers: {
-          Authorization: token
-        },
-        params: param
-      });
-      console.log(data);
+      const data = await this.$http.get('/users', param);
       this.tableData = data.data.data.users;
     }
   }

@@ -27,6 +27,8 @@ module.exports = {
   rules: {
     // 不检查给参数赋值
     "no-param-reassign": 'off',
+    "prefer-arrow-callback": 'off',
+    "func-names": 'off',
     // 不检查console
     "no-console": 'off',
     // 不检查结果的,
