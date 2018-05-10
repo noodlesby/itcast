@@ -23,7 +23,7 @@
         width="30">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="username"
         label="姓名"
         width="160">
       </el-table-column>
@@ -33,7 +33,7 @@
         width="300">
       </el-table-column>
       <el-table-column
-        prop="phone"
+        prop="mobile"
         label="电话"
         width="300">
       </el-table-column>
@@ -66,13 +66,14 @@ export default {
       // 从本地存储中获取令牌
       const token = localStorage.getItem('token');
       const param = { pagenum: 1, pagesize: 10 };
-      const data = await axios.get('http://47.96.21.88:8888/api/private/v1/users', {
-        heads: {
+      const data = await axios.get('http://127.0.0.1:8888/api/private/v1/users', {
+        headers: {
           Authorization: token
         },
         params: param
       });
-      this.tableData = data.data.msg;
+      console.log(data);
+      this.tableData = data.data.data.users;
     }
   }
 };

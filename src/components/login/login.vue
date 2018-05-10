@@ -29,8 +29,9 @@ export default {
   },
   methods: {
     async login() {
-      const res = await axios.post('http://47.96.21.88:8888/api/private/v1/login', this.formData);
+      const res = await axios.post('http://127.0.0.1:8888/api/private/v1/login', this.formData);
       const data = res.data;
+      console.log(data);
       if (data.meta.status === 200) {
         this.$message({
           type: 'success',
