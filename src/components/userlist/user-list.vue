@@ -7,11 +7,11 @@
     </el-breadcrumb>
     <el-row>
       <el-col :span="24">
-        <div>
+        <div class="search">
           <el-input v-model="searchValue" placeholder="请输入内容" clearable>
             <el-button @click="handleSearch" slot="append" icon="el-icon-search"></el-button>
           </el-input>
-          <el-button type="success" plain>添加用户</el-button>
+          <el-button type="success" @click="userFormVisible = true" plain>添加用户</el-button>
         </div>
       </el-col>
     </el-row>
@@ -66,11 +66,32 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[1, 2]"
+      :page-sizes="[10, 20]"
       :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+
+    <el-dialog title="添加用户" :visible.sync="userFormVisible">
+      <el-form label-position="right" label-width="120px" :model="form">
+        <el-form-item label="用户名">
+          <el-input v-model="form.username"  auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="form.email" ></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="form.mobile" ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="userFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -79,10 +100,17 @@ export default {
   data() {
     return {
       tableData: [],
-      pagesize: 1,
+      pagesize: 10,
       currentPage: 1,
       total: 0,
-      searchValue: ''
+      searchValue: '',
+      userFormVisible: false,
+      form: {
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
+      }
     };
   },
   mounted() {
@@ -144,6 +172,25 @@ export default {
           message: data.data.meta.msg
         });
       }
+    },
+    // 提交表单
+    async submitForm() {
+      const data = await this.$http.post('/users', this.form);
+      if (data.data.meta.status === 201) {
+        // 重新加载列表
+        this.load();
+        // 隐藏添加窗口
+        this.userFormVisible = false;
+        this.$message({
+          type: 'success',
+          message: data.data.meta.msg
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: data.data.meta.msg
+        });
+      }
     }
   }
 };
@@ -157,7 +204,7 @@ export default {
     padding-left: 10px;
     line-height: 45px;
   }
-  .el-input {
+  .search .el-input {
     width: 300px;
   }
 </style>

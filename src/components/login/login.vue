@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <el-form label-position="top" ref="form" :model="formData" label-width="80px">
+    <el-form label-position="top" :model="formData" label-width="80px">
       <h2>用户登录</h2>
       <el-form-item label="用户名">
         <el-input v-model="formData.username"></el-input>
