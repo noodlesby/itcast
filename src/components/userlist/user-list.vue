@@ -46,6 +46,15 @@
         width="200">
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[1, 2]"
+      :page-size="pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -53,7 +62,10 @@
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      pagesize: 1,
+      currentPage: 1,
+      total: 0
     };
   },
   mounted() {
@@ -62,9 +74,24 @@ export default {
   methods: {
     async load() {
       // 从本地存储中获取令牌
-      const param = { pagenum: 1, pagesize: 10 };
-      const data = await this.$http.get('/users', param);
+      const param = { pagenum: this.currentPage, pagesize: this.pagesize };
+      const data = await this.$http.get('/users', {
+        params: param
+      });
       this.tableData = data.data.data.users;
+      this.total = data.data.data.total;
+    },
+    handleSizeChange(val) {
+      this.pagesize = val;
+      this.load();
+      // size发生变化
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.load();
+      // 页码发生变化
+      console.log(`当前页: ${val}`);
     }
   }
 };
