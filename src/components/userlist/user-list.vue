@@ -8,14 +8,15 @@
     <el-row>
       <el-col :span="24">
         <div>
-          <el-input placeholder="请输入内容" clearable>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input v-model="searchValue" placeholder="请输入内容" clearable>
+            <el-button @click="handleSearch" slot="append" icon="el-icon-search"></el-button>
           </el-input>
           <el-button type="success" plain>添加用户</el-button>
         </div>
       </el-col>
     </el-row>
     <el-table
+      :border="true"
       :data="tableData"
       style="width: 100%">
       <el-table-column
@@ -40,10 +41,22 @@
       <el-table-column
         label="用户状态"
         width="80">
+        <template slot-scope="scope">
+           <el-switch
+            v-model="scope.row.mg_state"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+          </el-switch>
+        </template>
       </el-table-column>
       <el-table-column
         label="操作"
         width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" icon="el-icon-edit" plain></el-button>
+          <el-button type="danger" size="mini" icon="el-icon-delete" plain></el-button>
+          <el-button type="warning" size="mini" icon="el-icon-check" plain></el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -74,15 +87,35 @@ export default {
   methods: {
     async load() {
       // 从本地存储中获取令牌
-      const param = { pagenum: this.currentPage, pagesize: this.pagesize };
+      const params = { pagenum: this.currentPage, pagesize: this.pagesize };
       const data = await this.$http.get('/users', {
-        params: param
+        params
       });
+      // 表格数据
       this.tableData = data.data.data.users;
+      // 总数据条数
       this.total = data.data.data.total;
     },
+    async handleSearch() {
+      // 从本地存储中获取令牌
+      const params = {
+        pagenum: this.currentPage,
+        pagesize: this.pagesize,
+        query: this.searchValue
+      };
+      const data = await this.$http.get('/users', {
+        params
+      });
+      // 表格数据
+      this.tableData = data.data.data.users;
+      // 总数据条数
+      this.total = data.data.data.total;
+    },
+    // 分页方法
     handleSizeChange(val) {
       this.pagesize = val;
+      // 当每页条数发生变化，修改当前页码为第一页
+      this.currentPage = 1;
       this.load();
       // size发生变化
       console.log(`每页 ${val} 条`);
