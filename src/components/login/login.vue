@@ -40,6 +40,12 @@ export default {
         this.$router.push({
           name: 'home'
         });
+      } else {
+        // 登录失败，返回失败的原因
+        this.$message({
+          type: 'error',
+          message: data.meta.msg
+        });
       }
     }
   }

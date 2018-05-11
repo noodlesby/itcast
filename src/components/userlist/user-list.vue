@@ -43,6 +43,9 @@
         width="80">
         <template slot-scope="scope">
            <el-switch
+            @change="(val) => {
+              handleChange(val, scope.row.id)
+            }"
             v-model="scope.row.mg_state"
             active-color="#13ce66"
             inactive-color="#ff4949">
@@ -78,7 +81,8 @@ export default {
       tableData: [],
       pagesize: 1,
       currentPage: 1,
-      total: 0
+      total: 0,
+      searchValue: ''
     };
   },
   mounted() {
@@ -125,6 +129,21 @@ export default {
       this.load();
       // 页码发生变化
       console.log(`当前页: ${val}`);
+    },
+    // 处理
+    async handleChange(val, id) {
+      const data = await this.$http.put(`/users/${id}/state/${val}`);
+      if (data.data.meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: data.data.meta.msg
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: data.data.meta.msg
+        });
+      }
     }
   }
 };
