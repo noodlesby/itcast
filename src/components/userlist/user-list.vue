@@ -72,19 +72,23 @@
       :total="total">
     </el-pagination>
 
-    <el-dialog title="添加用户" :visible.sync="userFormVisible">
-      <el-form label-position="right" label-width="120px" :model="form">
-        <el-form-item label="用户名">
+    <el-dialog title="添加用户"
+      :visible.sync="userFormVisible">
+      <el-form label-position="right" label-width="120px"
+        :rules="rules"
+        ref="ruleForm"
+        :model="form">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username"  auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" ></el-input>
         </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="form.mobile" ></el-input>
+        <el-form-item label="电话" prop="mobile">
+          <el-input v-model="form.mobile"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -110,6 +114,22 @@ export default {
         password: '',
         email: '',
         mobile: ''
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+        ],
+        email: [
+          { type: 'email', message: '邮箱地址格式不正确', trigger: 'blur' }
+        ],
+        mobile: [
+          { type: '', message: '请输入用户名', trigger: 'blur' }
+        ]
       }
     };
   },
@@ -175,22 +195,30 @@ export default {
     },
     // 提交表单
     async submitForm() {
-      const data = await this.$http.post('/users', this.form);
-      if (data.data.meta.status === 201) {
-        // 重新加载列表
-        this.load();
-        // 隐藏添加窗口
-        this.userFormVisible = false;
-        this.$message({
-          type: 'success',
-          message: data.data.meta.msg
-        });
-      } else {
-        this.$message({
-          type: 'error',
-          message: data.data.meta.msg
-        });
-      }
+      // 表单提交前，先进行表单验证
+      this.$refs.ruleForm.validate(async (valid) => {
+        if (!valid) {
+          return;
+        }
+        // 表单提交
+        const data = await this.$http.post('/users', this.form);
+        if (data.data.meta.status === 201) {
+          // 重新加载列表
+          this.load();
+          // 隐藏添加窗口
+          this.userFormVisible = false;
+          this.$message({
+            type: 'success',
+            message: data.data.meta.msg
+          });
+          // this.$refs.ruleForm.resetFields();
+        } else {
+          this.$message({
+            type: 'error',
+            message: data.data.meta.msg
+          });
+        }
+      });
     }
   }
 };

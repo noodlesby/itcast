@@ -1,11 +1,16 @@
 <template>
   <div class="login-wrap">
-    <el-form label-position="top" :model="formData" label-width="80px">
+    <el-form
+      label-position="top"
+      :rules="rules"
+      ref="ruleForm"
+      :model="formData"
+      label-width="80px">
       <h2>用户登录</h2>
-      <el-form-item label="用户名">
+      <el-form-item label="用户名" prop="username">
         <el-input v-model="formData.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
+      <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="formData.password"></el-input>
       </el-form-item>
       <el-form-item>
@@ -22,31 +27,46 @@ export default {
       formData: {
         username: '',
         password: ''
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 11, message: '长度在 6 到 11 个字符', trigger: 'blur' }
+        ]
       }
     };
   },
   methods: {
     async login() {
-      const res = await this.$http.post('/login', this.formData);
-      const data = res.data;
-      console.log(data);
-      if (data.meta.status === 200) {
-        this.$message({
-          type: 'success',
-          message: '登录成功!'
-        });
-        // 登录成功，把token记录到本地存储中
-        localStorage.setItem('token', data.data.token);
-        this.$router.push({
-          name: 'home'
-        });
-      } else {
-        // 登录失败，返回失败的原因
-        this.$message({
-          type: 'error',
-          message: data.meta.msg
-        });
-      }
+      // 表单验证
+      this.$refs.ruleForm.validate(async (valid) => {
+        if (!valid) {
+          return;
+        }
+        const res = await this.$http.post('/login', this.formData);
+        const data = res.data;
+        if (data.meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '登录成功!'
+          });
+          // 登录成功，把token记录到本地存储中
+          localStorage.setItem('token', data.data.token);
+          this.$router.push({
+            name: 'home'
+          });
+        } else {
+          // 登录失败，返回失败的原因
+          this.$message({
+            type: 'error',
+            message: data.meta.msg
+          });
+        }
+      });
     }
   }
 };
