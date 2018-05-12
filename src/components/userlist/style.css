@@ -1,0 +1,10 @@
+.el-breadcrumb {
+  background-color: #d3dce6;
+  height: 45px;
+  font-size: 15px;
+  padding-left: 10px;
+  line-height: 45px;
+}
+.search .el-input {
+  width: 300px;
+}
