@@ -6,10 +6,16 @@ export default {
       currentPage: 1,
       total: 0,
       searchValue: '',
-      userFormVisible: false,
-      form: {
+      addUserFormVisible: false,
+      editUserFormVisible: false,
+      addFormData: {
         username: '',
         password: '',
+        email: '',
+        mobile: ''
+      },
+      editFormData: {
+        username: '',
         email: '',
         mobile: ''
       },
@@ -76,7 +82,7 @@ export default {
       // 页码发生变化
       console.log(`当前页: ${val}`);
     },
-    // 处理
+    // 用户状态改变
     async handleChange(val, id) {
       const data = await this.$http.put(`/users/${id}/state/${val}`);
       if (data.data.meta.status === 200) {
@@ -92,19 +98,19 @@ export default {
       }
     },
     // 提交表单
-    async submitForm() {
+    async handleAddUser() {
       // 表单提交前，先进行表单验证
-      this.$refs.ruleForm.validate(async (valid) => {
+      this.$refs.addUserForm.validate(async (valid) => {
         if (!valid) {
           return;
         }
         // 表单提交
-        const data = await this.$http.post('/users', this.form);
+        const data = await this.$http.post('/users', this.addFormData);
         if (data.data.meta.status === 201) {
           // 重新加载列表
           this.load();
           // 隐藏添加窗口
-          this.userFormVisible = false;
+          this.addUserFormVisible = false;
           this.$message({
             type: 'success',
             message: data.data.meta.msg
@@ -147,6 +153,33 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    // 编辑 - 获取用户信息
+    async handleGetUserInfo(user) {
+      // 显示修改用户对话框
+      this.editUserFormVisible = true;
+      const res = await this.$http.get(`/users/${user.id}`);
+      this.editFormData = res.data.data;
+    },
+    // 编辑 - 修改用户信息
+    async handleEditUser() {
+      this.editUserFormVisible = false;
+      // 获取用户id
+      const { id: userId } = this.editFormData;
+      const res = await this.$http.put(`/users/${userId}`, this.editFormData);
+      if (res.data.meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: res.data.meta.msg
+        });
+        // 重新加载数据
+        this.load();
+      } else {
+        this.$message({
+          type: 'error',
+          message: res.data.meta.msg
+        });
+      }
     }
   }
 };

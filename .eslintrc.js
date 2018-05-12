@@ -31,7 +31,7 @@ module.exports = {
     "func-names": 'off',
     // 不检查console
     "no-console": 'off',
-    // 不检查结果的,
+    // 不检查结束的,
     "comma-dangle": [2, "never"],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
