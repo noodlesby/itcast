@@ -1,0 +1,14 @@
+.el-breadcrumb {
+  background-color: #d3dce6;
+  height: 45px;
+  font-size: 15px;
+  padding-left: 10px;
+  line-height: 45px;
+}
+
+.level2-row {
+  margin-bottom: 5px;
+}
+.level3-row {
+  margin-right: 5px;
+}
