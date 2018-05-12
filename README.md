@@ -63,4 +63,17 @@ $ git checkout dev-role
 # 或者
 
 $ git branch -b dev-role
+
+
+# 创建远程分支，当push的时候会自动创建
+
+$ git push origin dev-role
+
+# 查看所有分支包括远程分支
+
+$ git branch -a
+
+# 删除远程分支
+
+$ git push origin --delete dev-role
 ```
