@@ -7,6 +7,7 @@
     </el-breadcrumb>
     <el-table
       :data="tableData"
+      v-loading="loading"
       border
       style="width: 100%">
       <el-table-column
@@ -40,7 +41,8 @@
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      loading: true
     };
   },
   mounted() {
@@ -50,6 +52,7 @@ export default {
     async loadData() {
       const res = await this.$http.get('/rights/list');
       if (res.data.meta.status === 200) {
+        this.loading = false;
         this.tableData = res.data.data;
       }
     }

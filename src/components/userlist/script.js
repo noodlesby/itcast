@@ -1,6 +1,7 @@
 export default {
   data() {
     return {
+      loading: true,
       tableData: [],
       pagesize: 10,
       currentPage: 1,
@@ -47,12 +48,16 @@ export default {
       const data = await this.$http.get('/users', {
         params
       });
-      // 表格数据
-      this.tableData = data.data.data.users;
-      // 总数据条数
-      this.total = data.data.data.total;
+      if (data.data.meta.status === 200) {
+        this.loading = false;
+        // 表格数据
+        this.tableData = data.data.data.users;
+        // 总数据条数
+        this.total = data.data.data.total;
+      }
     },
     async handleSearch() {
+      this.loading = true;
       // 从本地存储中获取令牌
       const params = {
         pagenum: this.currentPage,
@@ -62,10 +67,13 @@ export default {
       const data = await this.$http.get('/users', {
         params
       });
-      // 表格数据
-      this.tableData = data.data.data.users;
-      // 总数据条数
-      this.total = data.data.data.total;
+      if (data.data.meta.status === 200) {
+        this.loading = false;
+        // 表格数据
+        this.tableData = data.data.data.users;
+        // 总数据条数
+        this.total = data.data.data.total;
+      }
     },
     // 分页方法
     handleSizeChange(val) {
