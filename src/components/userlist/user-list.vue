@@ -57,7 +57,11 @@
         width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" plain></el-button>
-          <el-button type="danger" size="mini" icon="el-icon-delete" plain></el-button>
+          <el-button type="danger"
+            @click="handleDelete(scope.row)"
+            size="mini"
+            icon="el-icon-delete"
+            plain></el-button>
           <el-button type="warning" size="mini" icon="el-icon-check" plain></el-button>
         </template>
       </el-table-column>
@@ -218,6 +222,36 @@ export default {
             message: data.data.meta.msg
           });
         }
+      });
+    },
+    // 删除
+    async handleDelete(user) {
+      // 删除提示
+      this.$confirm('确认要删除该用户么？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const data = await this.$http.delete(`/users/${user.id}`);
+        if (data.data.meta.status === 200) {
+          console.log(this.load);
+          // 删除成功重新加载数据
+          this.load();
+          this.$message({
+            type: 'success',
+            message: data.data.meta.msg
+          });
+        } else {
+          this.$message({
+            type: 'error',
+            message: data.data.meta.msg
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
       });
     }
   }
