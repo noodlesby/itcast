@@ -6,6 +6,7 @@ import Login from '@/components/login/login';
 import Home from '@/components/home/home';
 import UserList from '@/components/userlist/user-list';
 import RoleList from '@/components/rolelist/role-list';
+import RightsList from '@/components/rightslist/rights-list';
 
 Vue.use(Router);
 
@@ -23,13 +24,18 @@ const router = new Router({
       children: [
         {
           name: 'userlist',
-          path: '/userlist',
+          path: '/users',
           component: UserList
         },
         {
           name: 'rolelist',
-          path: '/rolelist',
+          path: '/roles',
           component: RoleList
+        },
+        {
+          name: 'rightslist',
+          path: '/rights',
+          component: RightsList
         }
       ]
     }
