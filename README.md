@@ -36,3 +36,31 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```js
 "lintfix": "eslint --ext .js,.vue src --fix",
 ```
+
+## 合并分支
+
+```bash
+# 查看分支
+$ git branch
+
+# 切换分支
+$ git checkout master
+
+# 合并分支
+$ git merge dev-index
+
+# 把master分支的更新推送给远程服务器
+$ git push origin master
+
+# 删除分支
+$ git branch -d dev-index
+
+# 创建和切换分支
+
+$ git branch dev-role
+$ git checkout dev-role
+
+# 或者
+
+$ git branch -b dev-role
+```
