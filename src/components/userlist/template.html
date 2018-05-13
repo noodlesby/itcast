@@ -82,7 +82,9 @@
 
   <el-dialog title="添加用户"
     :visible.sync="addUserFormVisible">
-    <el-form label-position="right" label-width="120px"
+    <el-form
+      label-position="right" 
+      label-width="100px"
       :rules="rules"
       ref="addUserForm"
       :model="addFormData">
@@ -107,7 +109,9 @@
 
   <el-dialog title="修改用户"
     :visible.sync="editUserFormVisible">
-    <el-form label-position="right" label-width="120px"
+    <el-form
+      label-position="right" 
+      label-width="100px"
       :rules="rules"
       ref="editUserForm"
       :model="editFormData">

@@ -48,12 +48,17 @@ export default {
       const data = await this.$http.get('/users', {
         params
       });
+      this.loading = false;
       if (data.data.meta.status === 200) {
-        this.loading = false;
         // 表格数据
         this.tableData = data.data.data.users;
         // 总数据条数
         this.total = data.data.data.total;
+      } else {
+        this.$message({
+          type: 'error',
+          message: data.data.meta.msg
+        });
       }
     },
     async handleSearch() {
@@ -67,12 +72,17 @@ export default {
       const data = await this.$http.get('/users', {
         params
       });
+      this.loading = false;
       if (data.data.meta.status === 200) {
-        this.loading = false;
         // 表格数据
         this.tableData = data.data.data.users;
         // 总数据条数
         this.total = data.data.data.total;
+      } else {
+        this.$message({
+          type: 'error',
+          message: data.data.meta.msg
+        });
       }
     },
     // 分页方法

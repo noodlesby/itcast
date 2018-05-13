@@ -6,7 +6,7 @@
   </el-breadcrumb>
   <el-row>
     <el-col :span="24">
-      <el-button>添加角色</el-button>
+      <el-button @click="addRoleFormVisible = true">添加角色</el-button>
     </el-col>
   </el-row>
   <el-table
@@ -17,26 +17,28 @@
     <el-table-column type="expand">
       <template slot-scope="scope">
         <!-- 一级权限 -->
-
-        <el-row v-for="level1 in scope.row.children" :key="level1.id" >
+        <el-row class="level1-row" v-for="level1 in scope.row.children" :key="level1.id" >
           <el-col :span="4">
             <el-tag
               closable
               type="">
               {{ level1.authName }}
             </el-tag>
+            <i class="el-icon-arrow-right"></i>
           </el-col>
           <el-col :span="20">
             <!-- 二级权限 -->
             <el-row class="level2-row" v-for="level2 in level1.children" :key="level2.id">
-              <el-col :span="4">
+              <el-col :span="5">
                 <el-tag
                   closable
                   type="success">
                   {{ level2.authName }}
                 </el-tag>
+                <i class="el-icon-arrow-right"></i>
+                
               </el-col>
-              <el-col :span="20">
+              <el-col :span="19">
                 <!-- 三级菜单 -->
                 <el-tag
                   class="level3-row"
@@ -49,7 +51,9 @@
               </el-col>
             </el-row>
           </el-col>
-          <el-col v-if="scope.row.children.length === 0" :span="24">
+        </el-row>
+        <el-row v-if="scope.row.children.length === 0">
+          <el-col :span="24">
             没有分配权限
           </el-col>
         </el-row>
@@ -67,4 +71,24 @@
       prop="roleDesc">
     </el-table-column>
   </el-table>
+  <!-- 添加角色的弹出层 -->
+  <el-dialog title="添加角色" :visible.sync="addRoleFormVisible">
+    <el-form
+      ref="addRoleForm"
+      :rules="rules"
+      :model="addRoleFormData"
+      label-position="right"
+      label-width="100px">
+      <el-form-item prop="roleName" label="角色名称">
+        <el-input v-model="addRoleFormData.roleName" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item prop="roleDesc" label="角色描述">
+        <el-input v-model="addRoleFormData.roleDesc" auto-complete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="addRoleFormVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleAddRole">确 定</el-button>
+    </div>
+  </el-dialog>
 </div>
