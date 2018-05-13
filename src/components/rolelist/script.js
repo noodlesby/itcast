@@ -55,6 +55,35 @@ export default {
           });
         }
       });
+    },
+    // 删除角色
+    async handleDelete(role) {
+      // 删除提示
+      this.$confirm('确认删除该角色？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const { id: roleId } = role;
+        const res = await this.$http.delete(`/roles/${roleId}`);
+        if (res.data.meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '删除角色成功'
+          });
+          this.loadData();
+        } else {
+          this.$message({
+            type: 'error',
+            message: '删除角色失败'
+          });
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 };
