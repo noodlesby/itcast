@@ -9,6 +9,7 @@
       <el-button @click="addRoleFormVisible = true">添加角色</el-button>
     </el-col>
   </el-row>
+  <!-- 角色列表 -->
   <el-table
     v-loading="loading"
     :data="tableData"
@@ -75,7 +76,8 @@
       <template slot-scope="scope">
           <el-button type="primary" 
           size="mini" 
-          icon="el-icon-edit" 
+          icon="el-icon-edit"
+          @click="showEditRoleDialog(scope.row)"
           plain>
         </el-button>
         <el-button type="danger"
@@ -110,6 +112,26 @@
     <div slot="footer" class="dialog-footer">
       <el-button @click="addRoleFormVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleAddRole">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 修改角色的弹出层 -->
+  <el-dialog title="编辑角色" :visible.sync="addRoleFormVisible">
+    <el-form
+      ref="editRoleForm"
+      :rules="rules"
+      :model="addRoleFormData"
+      label-position="right"
+      label-width="100px">
+      <el-form-item prop="roleName" label="角色名称">
+        <el-input v-model="addRoleFormData.roleName" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item prop="roleDesc" label="角色描述">
+        <el-input v-model="addRoleFormData.roleDesc" auto-complete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="addRoleFormVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleEidtRole">确 定</el-button>
     </div>
   </el-dialog>
 </div>

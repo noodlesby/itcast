@@ -64,6 +64,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
+        // 删除操作
         const { id: roleId } = role;
         const res = await this.$http.delete(`/roles/${roleId}`);
         if (res.data.meta.status === 200) {
@@ -84,6 +85,31 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    async showEditRoleDialog(role) {
+      // 显示编辑角色的对话框
+      this.addRoleFormVisible = true;
+      const { id: roleId } = role;
+      const res = await this.$http.get(`/roles/${roleId}`);
+      this.addRoleFormData = res.data.data;
+    },
+    // 编辑角色
+    async handleEidtRole() {
+      const { roleId } = this.addRoleFormData;
+      const res = await this.$http.put(`/roles/${roleId}`, this.addRoleFormData);
+      this.addRoleFormVisible = false;
+      if (res.data.meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: '编辑用户成功'
+        });
+        this.loadData();
+      } else {
+        this.$message({
+          type: 'error',
+          message: '编辑用户错误'
+        });
+      }
     }
   }
 };
