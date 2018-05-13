@@ -4,6 +4,7 @@ export default {
       tableData: [],
       loading: true,
       addRoleFormVisible: false,
+      editRoleFormVisible: false,
       addRoleFormData: {
         roleName: '',
         roleDesc: ''
@@ -15,7 +16,18 @@ export default {
         roleDesc: [
           { required: true, message: '请输入角色描述', trigger: 'blur' }
         ]
-      }
+      },
+      // 控制权限分配的对话框的显示隐藏
+      editRightsDialog: false,
+      rightsData: [],
+      defaultProps: {
+        children: 'children',
+        label: 'authName'
+      },
+      // 默认选中的权限id
+      checkedKeys: [],
+      // 点击授权的时候记录下来当前的角色
+      currentRole: {}
     };
   },
   mounted() {
@@ -88,16 +100,18 @@ export default {
     },
     async showEditRoleDialog(role) {
       // 显示编辑角色的对话框
-      this.addRoleFormVisible = true;
+      this.editRoleFormVisible = true;
       const { id: roleId } = role;
       const res = await this.$http.get(`/roles/${roleId}`);
       this.addRoleFormData = res.data.data;
+
+      this.addOrEdit = 'edit';
     },
     // 编辑角色
     async handleEidtRole() {
       const { roleId } = this.addRoleFormData;
       const res = await this.$http.put(`/roles/${roleId}`, this.addRoleFormData);
-      this.addRoleFormVisible = false;
+      this.editRoleFormVisible = false;
       if (res.data.meta.status === 200) {
         this.$message({
           type: 'success',
@@ -110,6 +124,66 @@ export default {
           message: '编辑用户错误'
         });
       }
+    },
+    // 显示权限分配的对话框
+    async showRightsDialog(role) {
+      // 获取当前角色具有的权限id
+      function getLevel3Ids(rightsList) {
+        const arr = [];
+        const fn = function (list) {
+          list.forEach((item) => {
+            if (!item.children) {
+              arr.push(item.id);
+            } else {
+              fn(item.children);
+            }
+          });
+        };
+        fn(rightsList);
+        return arr;
+      }
+      // 记录当前的角色
+      this.currentRole = role;
+      this.editRightsDialog = true;
+      const res = await this.$http.get('/rights/tree');
+      this.rightsData = res.data.data;
+      // 设置选中的权限
+      this.checkedKeys = getLevel3Ids(role.children);
+    },
+    // 分配权限
+    async handleRights() {
+      // 获取所有选中的权限id
+      const nodes = this.$refs.tree.getCheckedNodes();
+      let arr = [];
+      nodes.forEach((item) => {
+        // 选中的子权限id
+        arr.push(item.id.toString());
+        // 子权限的id 对应的父权限的id
+        arr = arr.concat(item.pid.split(','));
+      });
+
+      // 数组去重
+      const set = new Set(arr);
+
+      const ids = [...set].join(',');
+
+      const res = await this.$http.post(`/roles/${this.currentRole.id}/rights`, {
+        rids: ids
+      });
+      if (res.data.meta.status === 200) {
+        this.editRightsDialog = false;
+        this.$message({
+          type: 'success',
+          message: '权限分配成功'
+        });
+        this.loadData();
+      } else {
+        this.$message({
+          type: 'error',
+          message: '权限分配失败'
+        });
+      }
     }
+
   }
 };

@@ -6,7 +6,7 @@
   </el-breadcrumb>
   <el-row>
     <el-col :span="24">
-      <el-button @click="addRoleFormVisible = true">添加角色</el-button>
+      <el-button @click="addRoleFormVisible = true;">添加角色</el-button>
     </el-col>
   </el-row>
   <!-- 角色列表 -->
@@ -37,7 +37,6 @@
                   {{ level2.authName }}
                 </el-tag>
                 <i class="el-icon-arrow-right"></i>
-                
               </el-col>
               <el-col :span="19">
                 <!-- 三级菜单 -->
@@ -88,6 +87,7 @@
         </el-button>
         <el-button type="warning"
           size="mini"
+          @click="showRightsDialog(scope.row)"
           icon="el-icon-check"
           plain>
         </el-button>
@@ -115,7 +115,7 @@
     </div>
   </el-dialog>
   <!-- 修改角色的弹出层 -->
-  <el-dialog title="编辑角色" :visible.sync="addRoleFormVisible">
+  <el-dialog title="编辑角色" :visible.sync="editRoleFormVisible">
     <el-form
       ref="editRoleForm"
       :rules="rules"
@@ -130,8 +130,26 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="addRoleFormVisible = false">取 消</el-button>
+      <el-button @click="editRoleFormVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleEidtRole">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 权限分配 -->
+  <el-dialog title="权限分配" :visible.sync="editRightsDialog">
+    <div>
+      <el-tree
+        :data="rightsData"
+        ref="tree"
+        default-expand-all
+        :default-checked-keys="checkedKeys"
+        show-checkbox
+        node-key="id"
+        :props="defaultProps">
+      </el-tree>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="editRightsDialog = false">取 消</el-button>
+      <el-button type="primary" @click="handleRights">确 定</el-button>
     </div>
   </el-dialog>
 </div>
