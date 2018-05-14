@@ -18,8 +18,7 @@ export default {
       selectRolesFormData: {
         username: '',
         roleName: '',
-        rid: -1,
-        id: -1
+        rid: -1
       },
       addFormData: {
         username: '',
