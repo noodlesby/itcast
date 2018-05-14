@@ -7,8 +7,20 @@ export default {
       currentPage: 1,
       total: 0,
       searchValue: '',
+      // 添加用户的对话框是否显示
       addUserFormVisible: false,
+      // 编辑用户的对话框是否显示
       editUserFormVisible: false,
+      // 分配角色的对话框是否显示
+      selectRolesDialogVisible: false,
+      // 分配角色 ，绑定下拉框的角色列表
+      options: [],
+      selectRolesFormData: {
+        username: '',
+        roleName: '',
+        rid: -1,
+        id: -1
+      },
       addFormData: {
         username: '',
         password: '',
@@ -196,6 +208,34 @@ export default {
         this.$message({
           type: 'error',
           message: res.data.meta.msg
+        });
+      }
+    },
+    // 显示分配角色的对话框
+    async showSelectRoles(user) {
+      const userRes = await this.$http.get(`/users/${user.id}`);
+      // 请求所有的角色，绑定到下拉框中
+      const res = await this.$http.get('/roles');
+      this.options = res.data.data;
+      this.selectRolesDialogVisible = true;
+      this.selectRolesFormData = userRes.data.data;
+    },
+    // 分配角色
+    async handleRole() {
+      this.selectRolesDialogVisible = false;
+      const res = await this.$http.put(`users/${this.selectRolesFormData.id}/role`, {
+        rid: this.selectRolesFormData.rid
+      });
+      if (res.data.meta.status === 200) {
+        this.selectRolesDialogVisible = false;
+        this.$message({
+          type: 'success',
+          message: '分配角色成功'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: '分配角色失败'
         });
       }
     }

@@ -66,10 +66,15 @@
           size="mini"
           icon="el-icon-delete"
           plain></el-button>
-        <el-button type="warning" size="mini" icon="el-icon-check" plain></el-button>
+        <el-button type="warning"
+          @click="showSelectRoles(scope.row)"
+          size="mini"
+          icon="el-icon-check"
+          plain></el-button>
       </template>
     </el-table-column>
   </el-table>
+  <!-- 表格分页 -->
   <el-pagination
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
@@ -79,7 +84,7 @@
     layout="total, sizes, prev, pager, next, jumper"
     :total="total">
   </el-pagination>
-
+  <!-- 添加用户 -->
   <el-dialog title="添加用户"
     :visible.sync="addUserFormVisible">
     <el-form
@@ -106,7 +111,7 @@
       <el-button type="primary" @click="handleAddUser">确 定</el-button>
     </div>
   </el-dialog>
-
+  <!-- 修改用户 -->
   <el-dialog title="修改用户"
     :visible.sync="editUserFormVisible">
     <el-form
@@ -128,6 +133,33 @@
     <div slot="footer" class="dialog-footer">
       <el-button @click="editUserFormVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleEditUser">确 定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 分配角色 -->
+  <el-dialog title="分配角色"
+    :visible.sync="selectRolesDialogVisible">
+    <el-form 
+      label-width="100px"
+      label-position="right"
+      :model="selectRolesFormData">
+      <el-form-item label="当前用户">
+        <span>{{ selectRolesFormData.username }}</span>
+      </el-form-item>
+      <el-form-item label="请选择角色">
+        <el-select
+          v-model="selectRolesFormData.rid"
+          placeholder="请选择角色">
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.roleName"
+            :value="item.id"></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="selectRolesDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleRole">确 定</el-button>
     </div>
   </el-dialog>
 </div>
