@@ -158,8 +158,13 @@ export default {
       nodes.forEach((item) => {
         // 选中的子权限id
         arr.push(item.id.toString());
+
         // 子权限的id 对应的父权限的id
-        arr = arr.concat(item.pid.split(','));
+        if (typeof (item.pid) === 'number') {
+          arr.push(item.pid.toString());
+        } else {
+          arr = arr.concat(item.pid.split(','));
+        }
       });
 
       // 数组去重
@@ -181,6 +186,24 @@ export default {
         this.$message({
           type: 'error',
           message: '权限分配失败'
+        });
+      }
+    },
+    // 删除权限
+    async handleDeleteRights(role, rights) {
+      // role 权限  rights 角色
+      const res = await this.$http.delete(`/roles/${role.id}/rights/${rights.id}`);
+      if (res.data.meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: '删除权限成功'
+        });
+        // 重新绑定数据
+        role.children = res.data.data;
+      } else {
+        this.$message({
+          type: 'error',
+          message: '删除权限失败'
         });
       }
     }
