@@ -1,14 +1,12 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>商品管理</el-breadcrumb-item>
-      <el-breadcrumb-item>商品列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <my-breadcrumb level2="商品管理" level3="商品列表"></my-breadcrumb>
   </div>
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
@@ -18,11 +16,4 @@ export default {
 </script>
 
 <style scoped>
-.el-breadcrumb {
-  background-color: #d3dce6;
-  height: 45px;
-  font-size: 15px;
-  padding-left: 10px;
-  line-height: 45px;
-}
 </style>
