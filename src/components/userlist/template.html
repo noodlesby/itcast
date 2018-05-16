@@ -147,8 +147,8 @@
       </el-form-item>
       <el-form-item label="请选择角色">
         <el-select
-          v-model="selectRolesFormData.rid"
-          placeholder="请选择角色">
+          v-model="selectRolesFormData.rid">
+          <el-option :value="-1" label="请选择角色" disabled></el-option>
           <el-option
             v-for="item in options"
             :key="item.id"
