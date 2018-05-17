@@ -14,7 +14,7 @@ Vue.use(ElementUI);
 // 在assets文件夹下的http.js中封装的axios的插件
 Vue.use(http);
 // 全局的面包屑组件
-Vue.component('MyBreadcrumb', MyBreadcrumb);
+Vue.component(MyBreadcrumb.name, MyBreadcrumb);
 
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
