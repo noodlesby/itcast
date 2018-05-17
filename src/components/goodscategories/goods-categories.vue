@@ -3,7 +3,7 @@
     <my-breadcrumb
       level2='商品管理'
       level3='商品分类'></my-breadcrumb>
-    <el-button type='success' plain>添加分类</el-button>
+    <el-button type='success' @click="addCategoryVisible = true" plain>添加分类</el-button>
     <!-- 分类表格 -->
     <el-table v-loading="loading" :data="tableData" border max-height="400">
       <el-table-tree-column
@@ -34,7 +34,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary"
-            @click="handleEdit(scope.row.cat_name)"
+            @click="openEditDialog(scope.row)"
             size="mini"
             icon="el-icon-edit"
             plain></el-button>
@@ -59,6 +59,28 @@
       </div>
     </el-dialog>
     <!-- 添加对话框 -->
+    <el-dialog title="添加商品分类" :visible.sync="addCategoryVisible">
+      <el-form label-position="right" label-width="80px" :model="formAddData">
+        <el-form-item label="分类名称">
+          <el-input v-model="formAddData.cat_name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="分类名称">
+          <el-cascader
+            placeholder="默认添加一级分类"
+            clearable
+            expand-trigger="hover"
+            :options="level2List"
+            v-model="formAddData.selectedPIds"
+            :props="{value: 'cat_id',label: 'cat_name', children: 'children'}"
+            change-on-select
+          ></el-cascader>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addCategoryVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAdd">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -72,19 +94,38 @@ export default {
   data() {
     return {
       tableData: [],
+      // 添加商品分类的，父分类列表
+      level2List: [],
+      // 添加商品分类的时候，选中项绑定值，是一个数组
+      selectedPIds: [],
       loading: false,
       editCategoryVisible: false,
+      addCategoryVisible: false,
       formData: {
         cat_id: -1,
         cat_pid: -1,
         cat_name: ''
+      },
+      formAddData: {
+        cat_name: '',
+        selectedPIds: [],
+        cat_pid: 0,
+        cat_level: 0
       }
     };
   },
   mounted() {
     this.loadData();
+    this.loadLevel2List();
   },
   methods: {
+    // 添加商品分类的，父分类列表
+    async loadLevel2List() {
+      const res = await this.$http.get('/categories?type=2');
+      if (res.data.meta.status === 200) {
+        this.level2List = res.data.data;
+      }
+    },
     // 加载商品分类数据列表
     async loadData() {
       this.loading = true;
@@ -127,9 +168,62 @@ export default {
         });
       });
     },
-    async handleEdit(catName) {
+    // 打开编辑窗口
+    async openEditDialog(cat) {
       this.editCategoryVisible = true;
-      this.formData.cat_name = catName;
+      this.formData.cat_name = cat.cat_name;
+      this.formData.cat_id = cat.cat_id;
+    },
+    // 修改商品分类
+    async handleEdit() {
+      const res = await this.$http.put(`/categories/${this.formData.cat_id}`, {
+        cat_name: this.formData.cat_name
+      });
+      if (res.data.meta.status === 200) {
+        this.editCategoryVisible = false;
+        this.loadData();
+        this.$message({
+          type: 'success',
+          message: '编辑分类成功'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: '编辑分类失败'
+        });
+      }
+    },
+    async handleAdd() {
+      const length = this.formAddData.selectedPIds.length;
+      this.formAddData.cat_level = length;
+      switch (length) {
+        case 0:
+          this.formAddData.cat_pid = 0;
+          break;
+        case 1:
+          this.formAddData.cat_pid = this.formAddData.selectedPIds[0];
+          break;
+        case 2:
+          this.formAddData.cat_pid = this.formAddData.selectedPIds[1];
+          break;
+        default:
+      }
+
+      const res = await this.$http.post('categories', this.formAddData);
+      if (res.data.meta.status === 201) {
+        this.loadData();
+        this.loadLevel2List();
+        this.addCategoryVisible = false;
+        this.$message({
+          type: 'success',
+          message: '添加商品分类成功'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: '添加商品分类失败'
+        });
+      }
     }
   }
 };
