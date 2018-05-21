@@ -48,7 +48,6 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="pagenum"
       :page-sizes="[5, 10, 15, 20]"

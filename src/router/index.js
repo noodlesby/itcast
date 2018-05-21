@@ -9,7 +9,7 @@ import RoleList from '@/components/rolelist/role-list';
 import RightsList from '@/components/rightslist/rights-list';
 import GoodsList from '@/components/goodslist/goods-list';
 import GoodsCategories from '@/components/goodscategories/goods-categories';
-
+import GoodsAdd from '@/components/goodsadd/goods-add';
 
 Vue.use(Router);
 
@@ -44,6 +44,11 @@ const router = new Router({
           name: 'goodslist',
           path: '/goods',
           component: GoodsList
+        },
+        {
+          name: 'goodsadd',
+          path: '/goodsadd',
+          component: GoodsAdd
         },
         {
           name: 'goodscategories',

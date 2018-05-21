@@ -25,6 +25,8 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    // "import/no-extraneous-dependencies": 'off',
+    "consistent-return": 'off',
     // 不检查给参数赋值
     "no-param-reassign": 'off',
     "prefer-arrow-callback": 'off',

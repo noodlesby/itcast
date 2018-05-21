@@ -1,15 +1,15 @@
 <template>
   <div>
     <my-breadcrumb level2="商品管理" level3="商品列表"></my-breadcrumb>
-     <el-row>
-      <el-col :span="24">
-        <div class="search">
-          <el-input v-model="query" placeholder="请输入内容" clearable>
-            <el-button @click="handleSearch" slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-          <el-button type="success" plain>添加商品</el-button>
-        </div>
-      </el-col>
+    <el-row>
+    <el-col :span="24">
+      <div class="search">
+        <el-input v-model="query" placeholder="请输入内容" clearable>
+          <el-button @click="handleSearch" slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+        <el-button type="success" plain @click="$router.push({name: 'goodsadd'})">添加商品</el-button>
+      </div>
+    </el-col>
     </el-row>
     <!-- 商品列表 -->
      <el-table

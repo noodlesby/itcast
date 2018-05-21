@@ -7,3 +7,11 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.el-step__title {
+  font-size: 12px;
+}
+
+.ql-editor {
+  min-height: 400px;
+}
