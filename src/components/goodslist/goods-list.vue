@@ -39,8 +39,11 @@
         width="80">
       </el-table-column>
       <el-table-column
-        prop="add_time"
-        label="创建时间">
+        label="创建时间"
+        width="160">
+        <template slot-scope="scope">
+          {{scope.row.add_time | dateFormat}}
+        </template>
       </el-table-column>
       <el-table-column
         label="操作">
@@ -50,6 +53,7 @@
             icon="el-icon-edit"
             plain></el-button>
           <el-button type="danger"
+            @click="handleDelete(scope.row.goods_id)"
             size="mini"
             icon="el-icon-delete"
             plain></el-button>
@@ -117,6 +121,30 @@ export default {
       this.pagenum = val;
       this.loadData();
       console.log(`当前页: ${val}`);
+    },
+    // 删除
+    async handleDelete(goodsId) {
+      this.$confirm('是否要删除该商品？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const res = await this.$http.delete(`/goods/${goodsId}`);
+        if (res.data.meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.loadData();
+        } else {
+          this.$message.error('删除失败');
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 };
