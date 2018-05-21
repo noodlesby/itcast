@@ -46,6 +46,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pagenum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="pagesize"
+      layout="total, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
     <!-- 编辑对话框 -->
     <el-dialog title="编辑商品分类" :visible.sync="editCategoryVisible">
       <el-form label-position="right" label-width="80px" :model="formData">
@@ -111,7 +121,11 @@ export default {
         selectedPIds: [],
         cat_pid: 0,
         cat_level: 0
-      }
+      },
+      // 分页数据
+      pagesize: 5,
+      pagenum: 1,
+      total: 0
     };
   },
   mounted() {
@@ -126,13 +140,26 @@ export default {
         this.level2List = res.data.data;
       }
     },
+    // 处理分页
+    handleCurrentChange(val) {
+      this.pagenum = val;
+      this.loadData();
+      console.log(`当前页: ${val}`);
+    },
     // 加载商品分类数据列表
     async loadData() {
       this.loading = true;
-      const res = await this.$http.get('/categories');
+      const res = await this.$http.get('/categories', {
+        params: {
+          type: 3,
+          pagenum: this.pagenum,
+          pagesize: this.pagesize
+        }
+      });
       if (res.data.meta.status === 200) {
         this.loading = false;
-        this.tableData = res.data.data;
+        this.tableData = res.data.data.result;
+        this.total = res.data.data.total;
       } else {
         this.loading = false;
         this.$message({
