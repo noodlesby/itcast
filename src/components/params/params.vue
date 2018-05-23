@@ -79,7 +79,8 @@
               <el-button type="primary"
                 size="mini"
                 icon="el-icon-edit"
-                plain></el-button>
+                plain
+                @click="openEditDynamic(scope.row)"></el-button>
               <el-button type="danger"
                 size="mini"
                 icon="el-icon-delete"
@@ -148,7 +149,7 @@
     </el-dialog>
     <!-- 编辑动态参数 -->
     <el-dialog title="编辑动态参数"
-      :visible.sync="addDynamicFormVisible">
+      :visible.sync="editDynamicFormVisible">
       <el-form
         label-position="right"
         label-width="100px"
@@ -160,8 +161,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addDynamicFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleAddDynamic">确 定</el-button>
+        <el-button @click="editDynamicFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleEditDynamic">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -180,6 +181,7 @@ export default {
       inputValue: '',
       btnDisabled: true,
       addDynamicFormVisible: false,
+      editDynamicFormVisible: false,
       DynamicFormData: {
         attr_id: '',
         attr_name: '',
@@ -276,9 +278,12 @@ export default {
           // 给数组中的每一项添加params属性，把attr_vals用,分割，转换成数组存储到params中
           this.dynamicTableData.forEach((item) => {
             const arr = [];
-            item.attr_vals.split(',').forEach((item1) => {
-              arr.push(item1);
+            item.attr_vals.trim().split(',').forEach((item1) => {
+              if (item1) {
+                arr.push(item1);
+              }
             });
+            console.log(arr);
             this.$set(item, 'params', arr);
           });
         } else {
@@ -326,6 +331,25 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    // 打开编辑动态参数的窗口
+    openEditDynamic(row) {
+      this.DynamicFormData.attr_id = row.attr_id;
+      this.DynamicFormData.attr_name = row.attr_name;
+      this.DynamicFormData.attr_vals = row.attr_vals;
+      this.editDynamicFormVisible = true;
+    },
+    async handleEditDynamic() {
+      const attrId = this.DynamicFormData.attr_id;
+      const url = `/categories/${this.selectedOptions[2]}/attributes/${attrId}`;
+      const res = await this.$http.put(url, this.DynamicFormData);
+      if (res.data.meta.status === 200) {
+        this.editDynamicFormVisible = false;
+        this.loadTableData();
+        this.$message.success('更新成功');
+      } else {
+        this.$message.error('更新失败');
+      }
     }
   }
 };
