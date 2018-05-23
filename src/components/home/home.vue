@@ -29,7 +29,7 @@
             <el-menu-item
               v-for="subRole in role.children"
               :key="subRole.id"
-              :index="subRole.path">
+              :index="'/' + subRole.path">
               <i class="el-icon-menu"></i>
               <span>{{ subRole.authName }}</span>
             </el-menu-item>
@@ -51,9 +51,9 @@ export default {
     };
   },
   mounted() {
-    this.$router.push({
-      name: 'userlist'
-    });
+    // this.$router.push({
+    //   name: 'userlist'
+    // });
 
     this.loadRoles();
   },
