@@ -29,7 +29,11 @@
     <!-- tab栏 -->
     <el-tabs v-model="activeName" @tab-click="handleTabClick">
       <el-tab-pane label="动态参数" name="many">
-        <el-button class="btn-add" type="primary" size="small">添加参数</el-button>
+        <el-button
+          :disabled="btnDisabled"
+          class="btn-add"
+          type="primary" size="small"
+          @click="addDynamicFormVisible = true">添加动态参数</el-button>
         <el-table
           stripe
           border
@@ -79,13 +83,17 @@
               <el-button type="danger"
                 size="mini"
                 icon="el-icon-delete"
-                plain></el-button>
+                plain
+                @click="handleDelete(scope.row)"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="静态属性" name="only">
-        <el-button class="btn-add" type="primary" size="small">添加属性</el-button>
+      <el-tab-pane label="静态参数" name="only">
+        <el-button
+          :disabled="btnDisabled"
+          class="btn-add"
+          type="primary" size="small">添加静态参数</el-button>
         <el-table
           :data="staticTableData"
           stripe
@@ -120,6 +128,42 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
+    <!-- 添加动态参数 -->
+    <el-dialog title="添加动态参数"
+      :visible.sync="addDynamicFormVisible">
+      <el-form
+        label-position="right"
+        label-width="100px"
+        :rules="rules"
+        ref="addDynamicForm"
+        :model="DynamicFormData">
+        <el-form-item label="动态参数" prop="attr_name">
+          <el-input v-model="DynamicFormData.attr_name"  auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addDynamicFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddDynamic">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 编辑动态参数 -->
+    <el-dialog title="编辑动态参数"
+      :visible.sync="addDynamicFormVisible">
+      <el-form
+        label-position="right"
+        label-width="100px"
+        :rules="rules"
+        ref="editDynamicForm"
+        :model="DynamicFormData">
+        <el-form-item label="动态参数" prop="attr_name">
+          <el-input v-model="DynamicFormData.attr_name"  auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addDynamicFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddDynamic">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -133,7 +177,22 @@ export default {
       dynamicTableData: [],
       staticTableData: [],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      btnDisabled: true,
+      addDynamicFormVisible: false,
+      DynamicFormData: {
+        attr_id: '',
+        attr_name: '',
+        attr_sel: 'many'
+      },
+      rules: {
+        attr_name: [
+          { required: true, message: '请输入参数名称', trigger: 'blur' }
+        ],
+        attr_vals: [
+          { required: true, message: '请输入参数值', trigger: 'blur' }
+        ]
+      }
     };
   },
   mounted() {
@@ -189,7 +248,9 @@ export default {
       // console.log(this.selectedOptions);
       if (this.selectedOptions.length !== 3) {
         this.dynamicTableData = [];
+        this.staticTableData = [];
       } else {
+        this.btnDisabled = false;
         this.loadTableData();
       }
     },
@@ -224,6 +285,47 @@ export default {
           this.staticTableData = res.data.data;
         }
       }
+    },
+    // 添加动态参数
+    async handleAddDynamic() {
+      this.$refs.addDynamicForm.validate(async (valide) => {
+        if (!valide) {
+          return;
+        }
+        const url = `/categories/${this.selectedOptions[2]}/attributes`;
+        const res = await this.$http.post(url, this.DynamicFormData);
+        if (res.data.meta.status === 201) {
+          this.addDynamicFormVisible = false;
+          this.$message.success('添加参数成功');
+          this.loadTableData();
+        } else {
+          this.$message.error('添加参数失败');
+        }
+      });
+    },
+    // 删除参数
+    async handleDelete(row) {
+      // 删除提示
+      this.$confirm('确认删除该参数？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const url = `/categories/${row.cat_id}/attributes/${row.attr_id}`;
+        const res = await this.$http.delete(url);
+        if (res.data.meta.status === 200) {
+          this.loadTableData();
+          // 删除成功
+          this.$message.success('删除成功');
+        } else {
+          this.$message.error('删除失败');
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 };
