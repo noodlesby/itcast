@@ -94,7 +94,8 @@
         <el-button
           :disabled="btnDisabled"
           class="btn-add"
-          type="primary" size="small">添加静态参数</el-button>
+          type="primary" size="small"
+          @click="addStaticFormVisible = true">添加静态参数</el-button>
         <el-table
           :data="staticTableData"
           stripe
@@ -119,11 +120,13 @@
               <el-button type="primary"
                 size="mini"
                 icon="el-icon-edit"
-                plain></el-button>
+                plain
+                @click="openEditStatic(scope.row)"></el-button>
               <el-button type="danger"
                 size="mini"
                 icon="el-icon-delete"
-                plain></el-button>
+                plain
+                @click="handleDelete(scope.row)"></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -165,6 +168,49 @@
         <el-button type="primary" @click="handleEditDynamic">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 添加静态参数 -->
+    <el-dialog title="添加静态参数"
+      :visible="addStaticFormVisible">
+      <el-form
+        label-position="right"
+        label-width="100px"
+        :rules="rules"
+        ref="addStaticForm"
+        :model="DynamicFormData">
+        <el-form-item label="静态参数" prop="attr_name">
+          <el-input v-model="DynamicFormData.attr_name"  auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="静态参数值" prop="attr_vals">
+          <el-input v-model="DynamicFormData.attr_vals"  auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addStaticFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleAddStatic">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 编辑动态参数 -->
+    <el-dialog title="编辑静态参数"
+      :visible="editStaticFormVisible">
+      <el-form
+        label-position="right"
+        label-width="100px"
+        :rules="rules"
+        ref="editStaticForm"
+        :model="DynamicFormData">
+        <el-form-item label="静态参数" prop="attr_name">
+          <el-input v-model="DynamicFormData.attr_name"  auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="静态参数值" prop="attr_vals">
+          <el-input v-model="DynamicFormData.attr_vals"  auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="editStaticFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleEditStatic">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -182,6 +228,8 @@ export default {
       btnDisabled: true,
       addDynamicFormVisible: false,
       editDynamicFormVisible: false,
+      addStaticFormVisible: false,
+      editStaticFormVisible: false,
       DynamicFormData: {
         attr_id: '',
         attr_name: '',
@@ -316,6 +364,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
+        this.DynamicFormData.attr_sel = 'many';
         const url = `/categories/${row.cat_id}/attributes/${row.attr_id}`;
         const res = await this.$http.delete(url);
         if (res.data.meta.status === 200) {
@@ -342,9 +391,48 @@ export default {
     async handleEditDynamic() {
       const attrId = this.DynamicFormData.attr_id;
       const url = `/categories/${this.selectedOptions[2]}/attributes/${attrId}`;
+      this.DynamicFormData.attr_sel = 'many';
       const res = await this.$http.put(url, this.DynamicFormData);
       if (res.data.meta.status === 200) {
         this.editDynamicFormVisible = false;
+        this.loadTableData();
+        this.$message.success('更新成功');
+      } else {
+        this.$message.error('更新失败');
+      }
+    },
+    // 添加静态参数
+    async handleAddStatic() {
+      this.$refs.addStaticForm.validate(async (valide) => {
+        if (!valide) {
+          return;
+        }
+        this.DynamicFormData.attr_sel = 'only';
+        const url = `/categories/${this.selectedOptions[2]}/attributes`;
+        const res = await this.$http.post(url, this.DynamicFormData);
+        if (res.data.meta.status === 201) {
+          this.addStaticFormVisible = false;
+          this.$message.success('添加参数成功');
+          this.loadTableData();
+        } else {
+          this.$message.error('添加参数失败');
+        }
+      });
+    },
+    // 打开编辑静态参数的窗口
+    openEditStatic(row) {
+      this.DynamicFormData.attr_id = row.attr_id;
+      this.DynamicFormData.attr_name = row.attr_name;
+      this.DynamicFormData.attr_vals = row.attr_vals;
+      this.editStaticFormVisible = true;
+    },
+    async handleEditStatic() {
+      const attrId = this.DynamicFormData.attr_id;
+      const url = `/categories/${this.selectedOptions[2]}/attributes/${attrId}`;
+      this.DynamicFormData.attr_sel = 'only';
+      const res = await this.$http.put(url, this.DynamicFormData);
+      if (res.data.meta.status === 200) {
+        this.editStaticFormVisible = false;
         this.loadTableData();
         this.$message.success('更新成功');
       } else {
