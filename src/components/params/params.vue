@@ -142,7 +142,7 @@ export default {
   methods: {
     // 动态的tag标签
     async handleClose(row, index) {
-      row.params = row.params.splice(index, 1);
+      row.params.splice(index, 1);
       // postdata
       const postData = {};
       postData.attr_name = row.attr_name;
@@ -160,8 +160,6 @@ export default {
     async handleInputConfirm(row) {
       const inputValue = this.inputValue;
       if (inputValue) {
-        // this.dynamicTags.push(inputValue);
-        // console.log(inputValue);
         row.params.push(inputValue);
         const postData = {};
         postData.attr_name = row.attr_name;
