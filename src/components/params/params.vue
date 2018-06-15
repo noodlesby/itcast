@@ -299,6 +299,7 @@ export default {
       if (this.selectedOptions.length !== 3) {
         this.dynamicTableData = [];
         this.staticTableData = [];
+        this.btnDisabled = true;
       } else {
         this.btnDisabled = false;
         this.loadTableData();

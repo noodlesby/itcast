@@ -13,7 +13,6 @@
           level-key="cat_level"
           parent-key="cat_pid"
           child-key="children"
-          :show-overflow-tooltip="true"
           width="320"
           :indent-size="20">
       </el-table-tree-column>
