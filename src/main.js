@@ -5,6 +5,7 @@ import ElementUI from 'element-ui';
 // 从node_modules里找
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/style.css';
+import '@/assets/css/index.css';
 import App from './App';
 import router from './router';
 
