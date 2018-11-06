@@ -9,12 +9,14 @@
     <el-input type="password" v-model="formData.password"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="onSubmit" class="login-btn">登陆</el-button>
+    <el-button type="primary" @click="submitHandler" class="login-btn">登陆</el-button>
   </el-form-item>
 </el-form>
  </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -25,8 +27,21 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-
+    submitHandler() {
+      axios.post('http://localhost:8888/api/private/v1/login', this.formData).then((res) => {
+        const msg = res.data.meta.msg;
+        const token = res.data.data.token;
+        if (res.data.meta.status === 200) {
+          this.$message.success(msg);
+          sessionStorage.setItem('token', token);
+        } else {
+          this.$message.error(msg);
+        }
+      }).catch((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
     }
   }
 };

@@ -1,0 +1,359 @@
+[33mcommit 90764cb9856e66e6b04fb5de5e7545e878308b6e[m[33m ([m[1;36mHEAD -> [m[1;32mlogin[m[33m)[m
+Author: noodles <wzp23@126.com>
+Date:   Mon Nov 5 14:07:26 2018 +0800
+
+    完成登陆静态页
+
+[33mcommit a8b7c1f83358d86b4f642cae347071caae26b542[m[33m ([m[1;32mmaster[m[33m)[m
+Author: noodles <wzp23@126.com>
+Date:   Mon Nov 5 10:18:33 2018 +0800
+
+    init
+
+[33mcommit c2c2cd583d2926bcab60863085a200802369db39[m
+Author: goddlts <54337467@qq.com>
+Date:   Fri Jun 15 09:26:37 2018 +0800
+
+    更新readme
+
+[33mcommit fb65d5c0419bd1174bbe06b8df8ff3de83277ffb[m
+Author: goddlts <54337467@qq.com>
+Date:   Fri Jun 15 09:23:09 2018 +0800
+
+    文档
+
+[33mcommit abb6efa5a5c73d96887f217af66320c2921ca62f[m
+Author: goddlts <54337467@qq.com>
+Date:   Fri Jun 15 09:21:11 2018 +0800
+
+    更新文档
+
+[33mcommit af39eb8ee8de40cbf9fdf0fd33c9b6e09dc8a9a7[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: goddlts <54337467@qq.com>
+Date:   Fri Jun 15 09:20:04 2018 +0800
+
+    小更改
+
+[33mcommit 9d1b05b153c5b608bad09f227cbb289337ab73aa[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 21:24:28 2018 +0800
+
+    订单管理
+
+[33mcommit 55ccd0c1e9ea3e10900ae286e97a04292da89241[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 15:14:36 2018 +0800
+
+    分类参数-静态参数-增删改查
+
+[33mcommit 10fe5b48450aafa69d59894109fe9d2dba35bcec[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 14:42:46 2018 +0800
+
+    分类参数-修改动态分类参数
+
+[33mcommit 016941c8a0f3fad57320e6bcbeaabf9472056ad4[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 11:31:02 2018 +0800
+
+    分类参数-动态参数-添加和删除
+
+[33mcommit f156cbd3ea9468a27775a27252c64204e1e2b639[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 10:27:51 2018 +0800
+
+    分类参数-删除和添加动态参数-bugfixed
+
+[33mcommit 5af0c95de5295aa52f71ea7a8d0f9a19275955aa[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 23 10:02:45 2018 +0800
+
+    分类参数-删除和添加动态参数
+
+[33mcommit c869805943ceb058507fcdbd0c8f678e645d6ba8[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 21 22:30:17 2018 +0800
+
+    数据报表
+
+[33mcommit 640d5a934e5273bdaf124e038b14c26935438b6a[m[33m ([m[1;31morigin/dev-goods[m[33m)[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 21 21:05:16 2018 +0800
+
+    商品管理-删除商品
+
+[33mcommit 9b23a2abb6ac3e61b5d338d08dc65eb74b0ce3b9[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 21 20:31:52 2018 +0800
+
+    商品管理-添加商品
+
+[33mcommit 103bcfe8903301df898fd75328c87e7e7c447aa6[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 21 10:25:58 2018 +0800
+
+    商品管理-商品列表
+
+[33mcommit 2774cb04073eca4a3f83c1d80bec0718c8fc9d66[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 21 09:58:25 2018 +0800
+
+    商品管理-商品分类分页
+
+[33mcommit 069227f251cfb0d3e935aaad038622e352435c21[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Thu May 17 22:13:25 2018 +0800
+
+    商品管理-添加分类
+
+[33mcommit ebc45c1ff4a585186c94752a72d42e2041844d26[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Thu May 17 20:07:08 2018 +0800
+
+    商品分类-3级分类，删除分类
+
+[33mcommit 34bc8ba4707e655b2516e372cae344273b37cbf2[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 16 09:50:05 2018 +0800
+
+    全局的面包屑组件
+
+[33mcommit 04e70f87a84897b859b434dbcdefd5587d1d5779[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 16 09:25:29 2018 +0800
+
+    用户列表-分配权限结束
+
+[33mcommit dd80a4528ee256dcce745088d9c1ca67a59e050b[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Tue May 15 00:18:25 2018 +0800
+
+    home-动态加载左侧权限菜单
+
+[33mcommit 7c32238c184864ee993f17d393f18c716df371ea[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 14 21:07:11 2018 +0800
+
+    用户列表-分配角色
+
+[33mcommit 4b9fac38a84f58c20a8f543fbc3cf9dd95a85df6[m[33m ([m[1;31morigin/dev-roles[m[33m)[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 14 14:05:54 2018 +0800
+
+    角色列表-删除权限
+
+[33mcommit 5e6f24de9ed79ecf6416b50f0239e11ceb8fee60[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 13 23:18:11 2018 +0800
+
+    权限列表-分配权限
+
+[33mcommit 7282d0b008acecdf5c5ac35c30f788182b7f88eb[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 13 11:56:30 2018 +0800
+
+    角色列表-编辑角色
+
+[33mcommit f8279aef86762985ddf4ca08fa069ae49212a7f3[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 13 11:29:05 2018 +0800
+
+    角色列表-删除角色
+
+[33mcommit 41f75529a26e29f0ab605f3579bcf5c4d572a160[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 13 11:15:54 2018 +0800
+
+    角色列表-添加角色
+
+[33mcommit dbf9ef074d4b20dffbcb06159b3ee1afcda71887[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 23:20:52 2018 +0800
+
+    角色列表-三级权限列表
+
+[33mcommit 3caf74debe383944981091c928282533fd6d191e[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 22:37:39 2018 +0800
+
+    角色列表
+
+[33mcommit 26c86fbcd9b1976e149155e0f188243d4ad9b4de[m[33m ([m[1;31morigin/dev-rights[m[33m)[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 21:22:33 2018 +0800
+
+    正在加载提示
+
+[33mcommit 6484056bd4b33a4bf303f5d5151af13204c8b36b[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 21:09:00 2018 +0800
+
+    权限列表
+
+[33mcommit d5a831f7ee9afa83fd79af1d617f6deabf893d91[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 20:45:04 2018 +0800
+
+    修改和配置路由
+
+[33mcommit 0ba79d32f64bb8831e9e40bf016f83b1b182e7f7[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 18:20:30 2018 +0800
+
+    更新readme
+
+[33mcommit 54873f6d7e35f89eeca689827e5493301a23dbb6[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 12:20:21 2018 +0800
+
+    更新readme
+
+[33mcommit 5e0c3d41b6efdb1140a3bbdfc2311575374372d6[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 11:59:57 2018 +0800
+
+    更新用户信息
+
+[33mcommit 2fdf7e58a1a83faef5c7dc17dcc2fcd1dd14f32c[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 10:15:10 2018 +0800
+
+    把用户列表拆分成多个文件
+
+[33mcommit 6c64a2f995b522d93de5a8d302f6e826dbdea526[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sat May 12 10:06:14 2018 +0800
+
+    删除用户
+
+[33mcommit d1d40bf0ec37bd579a31385a1e20f2916eb7bb58[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Fri May 11 22:52:37 2018 +0800
+
+    表单验证
+
+[33mcommit a57c7ffed4af9fc91351bfe9d926d90bc5853b66[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Fri May 11 22:09:20 2018 +0800
+
+    添加用户
+
+[33mcommit c094ebbd30628109519ec66829f3aebb9fa37e0f[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Fri May 11 21:05:28 2018 +0800
+
+    修改用户状态
+
+[33mcommit 5fa58ca4c28e111aab83616f91ec4457971c765f[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Fri May 11 17:39:17 2018 +0800
+
+    用户状态/操作展示和查找功能
+
+[33mcommit fc653e3186c5cb5c52fda9ef558111431d06b53c[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Fri May 11 09:32:23 2018 +0800
+
+    分页功能
+
+[33mcommit 0d97a2f6515af5b33d7fd264200d1e30b65440d9[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Thu May 10 21:53:45 2018 +0800
+
+    axios拦截器为除了login的请求添加toke
+
+[33mcommit f00c1b31747b55d67d5c370c041ecb07c8a775f3[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Thu May 10 21:13:09 2018 +0800
+
+    封装axios为Vue的插件，并设置baseUrl
+
+[33mcommit a4ca9efe22d3ac8659c5da5cf0f2e4a01662dc69[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Thu May 10 20:44:49 2018 +0800
+
+    用户列表异步获取数据测试成功:
+
+[33mcommit e0366fd200f259506f6fe32314b21c9cab41e66e[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Wed May 9 22:13:12 2018 +0800
+
+    获取表格数据，未测试
+
+[33mcommit 31d8598f74af3eed868c54bd569ee143a225c867[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Tue May 8 14:14:45 2018 +0800
+
+    面包屑控件
+
+[33mcommit 4ae38348da4e39491682bccd3c58f7fda22ab571[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Tue May 8 13:45:47 2018 +0800
+
+    用户列表和角色列表的路由配置
+
+[33mcommit 9f1b76d01dafa9e353afbd5f00d18497063422d8[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 7 16:59:38 2018 +0800
+
+    侧边导航
+
+[33mcommit f38c8ec08045ecfc15e8593bd84c80a43177905c[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 7 16:23:51 2018 +0800
+
+    退出和弹出提示框
+
+[33mcommit 4dece4debb4720db0fde351655e2e059c28bdef2[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 7 15:27:57 2018 +0800
+
+    路由拦截器中验证token
+
+[33mcommit 48283449f5cfe25013ed22794cb66188a9a00867[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Mon May 7 15:09:12 2018 +0800
+
+    登录验证，修改存储token的bug
+
+[33mcommit 020db1cf527537c59d29c9f7aaf6dc9d87d97567[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 23:03:19 2018 +0800
+
+    token存到本地存储中
+
+[33mcommit d8a7877ebeb0a1a3793ed9bee98fa7d17b3a8123[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 22:57:53 2018 +0800
+
+    后台首页布局
+
+[33mcommit 0f45c425b979e93e9952c2c3d104b29e17c16f74[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 22:19:17 2018 +0800
+
+    登录页布局调整
+
+[33mcommit 16dbf49b70c3539f557823e02325514a1b719138[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 21:42:36 2018 +0800
+
+    导入elementUI
+
+[33mcommit 07b3a3f08f90c7446e123267bfd2330cda5e35e3[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 21:26:46 2018 +0800
+
+    登录功能和配置eslint
+
+[33mcommit bae2592f31b234a3554eb89fd2416fd4b6e3dd85[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 20:46:02 2018 +0800
+
+    配置登录和首页的路由
+
+[33mcommit a90a49c0cb154d9ea3d0d2100bef3d540630e743[m
+Author: 牛亮 <nll@itcast.cn>
+Date:   Sun May 6 20:29:47 2018 +0800
+
+    项目初始化
