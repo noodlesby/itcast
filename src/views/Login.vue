@@ -27,21 +27,24 @@ export default {
     };
   },
   methods: {
-    submitHandler() {
-      axios.post('http://localhost:8888/api/private/v1/login', this.formData).then((res) => {
-        const msg = res.data.meta.msg;
+    async submitHandler() {
+      const res = await axios.post('http://localhost:8888/api/private/v1/login', this.formData);
+      console.log(res);
+      const {
+        data: {
+          meta: {
+            status, msg
+          }
+        }
+
+      } = res;
+      if (status === 200) {
+        this.$message.success(msg);
         const token = res.data.data.token;
-        if (res.data.meta.status === 200) {
-          this.$message.success(msg);
-          sessionStorage.setItem('token', token);
-        } else {
-          this.$message.error(msg);
-        }
-      }).catch((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+        sessionStorage.setItem('token', token);
+      } else {
+        this.$message.error(msg);
+      }
     }
   }
 };
