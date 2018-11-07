@@ -9,8 +9,10 @@ import '@/assets/css/index.css';
 import App from './App';
 import router from './router';
 import axios from '../node_modules/axios';
+import moment from '../node_modules/moment';
 
 Vue.prototype.$http = axios;
+Vue.filter('dateFormat', (originVal, format) => moment(originVal).format(format));
 
 Vue.use(ElementUI);
 // 在assets文件夹下的http.js中封装的axios的插件
