@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async getData() {
-      this.$http.defaults.headers.common.Authorization = sessionStorage.getItem('token');
+      /* this.$http.defaults.headers.common.Authorization = sessionStorage.getItem('token'); */
       const res = await this.$http.get(`users?pagenum=${this.pagenum}&pagesize=${this.pagesize}&query=${this.searchValue}`);
       const { meta: { status, msg } } = res.data;
       if (status === 200) {
