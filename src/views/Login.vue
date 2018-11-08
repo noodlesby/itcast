@@ -17,8 +17,6 @@
  </div>
 </template>
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -30,7 +28,7 @@ export default {
   },
   methods: {
     async submitHandler() {
-      const res = await axios.post('http://localhost:8888/api/private/v1/login', this.formData);
+      const res = await this.$http.post('login', this.formData);
       console.log(res);
       const {
         data: {
@@ -38,7 +36,6 @@ export default {
             status, msg
           }
         }
-
       } = res;
       if (status === 200) {
         this.$message.success(msg);
