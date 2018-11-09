@@ -2,3 +2,7 @@ h2 {
   margin: 0;
   padding: 0;
 }
+.card {
+  height: 100%;
+  overflow: auto;
+}
