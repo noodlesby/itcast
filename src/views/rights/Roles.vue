@@ -88,11 +88,32 @@
         <el-button type="danger"
         icon="el-icon-delete"
         size="mini" plain></el-button>
-        <el-button type="success" icon="el-icon-check" size="mini" plain
+        <el-button type="success"
+        icon="el-icon-check" size="mini" plain
+        @click="openSetRightsDialogHandler(scope.row)"
         ></el-button>
       </template>
       </el-table-column>
     </el-table>
+    <!--点击按钮分配权限 -->
+    <el-dialog
+  title="分配权限"
+  :visible.sync="setRightsDialogVisible">
+  <el-tree
+   ref="tree"
+  :data="treeData"
+  :props="defaultProps"
+   node-key="id"
+   :default-checked-keys="checkedList"
+   show-checkbox
+   default-expand-all
+  @node-click="handleNodeClick">
+  </el-tree>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="setRightsDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="setRightsSendHandler">确 定</el-button>
+  </span>
+</el-dialog>
 </el-card>
 </template>
 <script>
@@ -100,7 +121,14 @@ export default {
   data() {
     return {
       tableData: [],
-      loading: true
+      loading: true,
+      setRightsDialogVisible: false,
+      treeData: [],
+      defaultProps: { label: 'authName', children: 'children' },
+      checkedList: [],
+      halfCheckedList: [],
+      currentRoleId: -1
+
     };
   },
   created() {
@@ -126,6 +154,37 @@ export default {
       } else {
         this.$message.error(msg);
       }
+    },
+    async openSetRightsDialogHandler(role) {
+    //  清空数组
+      this.checkedList = [];
+      this.currentRoleId = role.id;
+      this.setRightsDialogVisible = true;
+      const res = await this.$http.get('rights/tree');
+      this.treeData = res.data.data;
+      role.children.forEach(level1 => {
+        level1.children.forEach(level2 => {
+          level2.children.forEach(level3 => {
+            this.checkedList.push(level3.id);
+          });
+        });
+      });
+    },
+    async setRightsSendHandler() {
+      const checkedList = this.$refs.tree.getCheckedKeys();
+      const halfCheckedList = this.$refs.tree.getHalfCheckedKeys();
+      const arr = checkedList.concat(halfCheckedList);
+      const str = arr.join(',');
+      const res = await this.$http.post(`roles/${this.currentRoleId}/rights`, { rids: str });
+      const { meta: { status, msg } } = res.data;
+      if (status === 200) {
+        this.$message.success(msg);
+        this.setRightsDialogVisible = false;
+        this.getData();
+      } else {
+        this.$message.error(msg);
+      }
+
     }
   }
 };
