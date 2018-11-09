@@ -6,6 +6,7 @@ import Home from '@/views/Home';
 import User from '@/views/users/User';
 import Rights from '@/views/rights/Rights';
 import Roles from '@/views/rights/Roles';
+import { Message } from 'element-ui';
 
 Vue.use(Router);
 const router = new Router({
@@ -16,12 +17,24 @@ const router = new Router({
       path: '/home',
       component: Home,
       children: [
-        { name: 'user', path: '/user', component: User },
+        { name: 'users', path: '/users', component: User },
         { name: 'rights', path: '/rights', component: Rights },
         { name: 'roles', path: '/roles', component: Roles }
       ]
     }
   ]
+});
+router.beforeEach((to, from, next) => {
+  // 判断是否是登录页面
+  if (to.name.toLowerCase() !== 'login') {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      Message.warning('您尚未登陆，请登录后访问');
+      router.push('/');
+      return;
+    }
+  }
+  next();
 });
 export default router;
 
