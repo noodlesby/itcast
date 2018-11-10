@@ -11,11 +11,11 @@
      <el-aside width="200px" class="aside">
         <el-menu
       style="height:100%"
-      unique-opened="true"
+      unique-opened = true
       router
         >
       <el-submenu :index="item.id"
-      v-for="item in menus" :key="item.id"
+      v-for="item in menus" :key="item.id + ''"
       >
         <template slot="title">
           <i class="el-icon-location"></i>
