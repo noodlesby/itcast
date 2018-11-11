@@ -143,8 +143,8 @@ export default {
         children: 'children'
       },
       catIds: [],
-      currentCatId: -1
-
+      currentCatId: -1,
+      currentCat: null
     };
   },
   created() {
@@ -223,6 +223,7 @@ export default {
       this.editDialogFormVisible = true;
       this.form.cat_name = info.cat_name;
       this.currentCatId = info.cat_id;
+      this.currentCat = info;
     },
     async editHandler() {
       const res = await this.$http.put(`categories/${this.currentCatId}`,{ cat_name: this.form.cat_name });
@@ -230,7 +231,7 @@ export default {
       if (status === 200) {
         this.$message.success(msg);
         this.editDialogFormVisible = false;
-        this.getData();
+        this.currentCat.cat_name = res.data.data.cat_name;
       } else {
         this.$message.error(msg);
       }
