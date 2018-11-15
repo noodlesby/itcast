@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Message } from 'element-ui';
 
 const MyAxios = {};
 MyAxios.install = function (Vue) {
@@ -17,6 +18,10 @@ MyAxios.install = function (Vue) {
   // Add a response interceptor
   axios.interceptors.response.use(function (response) {
     // Do something with response data
+    const { meta: { status, msg } } = response.data;
+    if (!(status === 200 || status === 201)) {
+      Message.error(msg);
+    }
     return response;
   }, function (error) {
     // Do something with response error

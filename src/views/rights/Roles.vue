@@ -138,12 +138,13 @@ export default {
     async getData() {
       const res = await this.$http.get('roles');
       this.loading = false;
-      const { meta: { status, msg } } = res.data;
-      if (status === 200) {
-        this.tableData = res.data.data;
+      /* const { meta: { status } } = res.data; */
+      this.tableData = res.data.data;
+      /* if (status === 200) {
+
       } else {
         this.$message.success(msg);
-      }
+      } */
     },
     async closeHandler(roleId, rightId) {
       const res = await this.$http.delete(`roles/${roleId}/rights/${rightId}`);
