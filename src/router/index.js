@@ -1,18 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// 导入login组件
-import Login from '@/views/Login';
-import Home from '@/views/Home';
-import User from '@/views/users/User';
-import Rights from '@/views/rights/Rights';
-import Roles from '@/views/rights/Roles';
-import Categories from '@/views/goods/Categories';
-import Goods from '@/views/goods/Goods';
-import AddGoods from '@/views/goods/AddGoods';
-import Params from '@/views/goods/Params';
-import Orders from '@/views/orders/Orders';
-import Reports from '@/views/reports/Reports';
 import { Message } from 'element-ui';
+// 导入login组件
+const Login = () => import('@/views/Login');
+const Home = () => import('@/views/Home');
+const User = () => import('@/views/users/User');
+const Rights = () => import('@/views/rights/Rights');
+const Roles = () => import('@/views/rights/Roles');
+const Categories = () => import('@/views/goods/Categories');
+const Goods = () => import('@/views/goods/Goods');
+const AddGoods = () => import('@/views/goods/AddGoods');
+const Params = () => import('@/views/goods/Params');
+const Orders = () => import('@/views/orders/Orders');
+const Reports = () => import('@/views/reports/Reports');
 
 Vue.use(Router);
 const router = new Router({
